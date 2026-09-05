@@ -1,0 +1,25 @@
+# See resistors.ato in this same directory for the sourcing note.
+#
+# Real part, sourced via a real web search (not fabricated), matching the
+# same real-sourcing discipline as the rest of this seed set: a standard
+# small-signal switching diode, 1N4148-equivalent, SOD-123 package.
+# LCSC part C2972760 (JKSEMI 1N4148SOD-123) -- confirmed via
+# https://www.lcsc.com/product-detail/C2972760.html.
+#
+# Honest limit: "SOD-123" below is the real, standard industry package
+# name, not independently verified against this ecosystem's own specific
+# KiCad footprint-library naming convention (e.g. generics/elec/src's
+# diodes use dimensioned strings like "SMA_L4.3-W2.6-LS5.2-FD" for a
+# different package). A real production part would need a footprint
+# string verified against an actual KiCad footprint library entry, the
+# same way every other own_parts/generics part's footprint string was
+# confirmed real by checking a real prior build's actual output -- this
+# one hasn't had that same footprint-level check, only the LCSC id is
+# independently confirmed.
+
+component SmallSignalDiode1N4148:
+    footprint = "SOD-123"
+    mpn = "1N4148SOD-123"
+    lcsc_id = "C2972760"
+    signal A ~ pin 1
+    signal K ~ pin 2

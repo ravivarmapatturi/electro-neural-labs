@@ -1,0 +1,13 @@
+# See resistors.ato in this same directory for the sourcing note.
+# Real 4-pin tactile SMD button, pins 1-2 tied together (one side),
+# 3-4 tied together (other side) -- matches the real footprint's actual
+# pin layout, same part used in the verified esp32_minimal reference board.
+
+component TactileButtonSKRPACE010:
+    footprint = "KEY-SMD_4P-L4.2-W3.2-P2.20-LS4.6"
+    mpn = "SKRPACE010"
+    lcsc_id = "C139797"
+    signal in ~ pin 1
+    in ~ pin 2
+    signal out ~ pin 3
+    out ~ pin 4

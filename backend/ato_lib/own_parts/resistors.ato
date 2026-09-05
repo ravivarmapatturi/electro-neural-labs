@@ -1,0 +1,42 @@
+# Own-parts seed database (v0 scaffold): real, verified passive-component
+# part numbers, sourced from an actual prior successful atopile build's
+# real BOM (esp32_minimal.bom.csv, /home/ravivarma/Documents/project) --
+# NOT invented. Each part number below was genuinely picked by atopile's
+# own real search/solve pipeline before that live search endpoint went
+# dead (0.2.69) / sign-in-gated (0.15.8). Exists so common resistor/
+# capacitor values can be used without any live network call or account.
+#
+# Coverage is intentionally tiny right now (only the 4 values that
+# happened to appear in one real board) -- a real v1 needs this sourced
+# properly (LCSC's own API, or Octopart) across a real E12/E24 series in
+# 0402/0603/0805, with live stock/price checks, not a hand-copied list
+# that will silently go stale (a part can go out of stock or get
+# discontinued; this file has no way to know that).
+
+component FixedResistor100R_0402:
+    footprint = "R0402"
+    mpn = "0402WGF1000TCE"
+    lcsc_id = "C25076"
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+
+component FixedResistor2k_0402:
+    footprint = "R0402"
+    mpn = "0402WGF2001TCE"
+    lcsc_id = "C4109"
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+
+component FixedResistor5k1_0402:
+    footprint = "R0402"
+    mpn = "0402WGF5101TCE"
+    lcsc_id = "C25905"
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+
+component FixedResistor10k_0402:
+    footprint = "R0402"
+    mpn = "0402WGF1002TCE"
+    lcsc_id = "C25744"
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2

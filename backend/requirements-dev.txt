@@ -1,0 +1,13 @@
+-r requirements.txt
+pytest==8.3.3
+
+# The real generation/build tests (tests/test_generation.py) also need
+# the actual `ato` CLI installed and on PATH -- NOT installable via this
+# file, because atopile has its own, separate, sometimes-conflicting
+# dependency set (see README's "Setting up atopile" section). Install it
+# in its own virtual environment:
+#
+#   python3 -m venv .ato-venv && .ato-venv/bin/pip install atopile
+#   export PATH="$(pwd)/.ato-venv/bin:$PATH"
+#
+# Tests auto-skip (not fail) if `ato` isn't found on PATH.

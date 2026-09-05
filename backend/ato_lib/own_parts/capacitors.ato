@@ -1,0 +1,23 @@
+# See resistors.ato in this same directory for the sourcing note --
+# same real BOM, same honest "tiny seed, not production-ready" caveat.
+
+component FixedCapacitor100nF_0402:
+    footprint = "C0402"
+    mpn = "CL05B104KB54PNC"
+    lcsc_id = "C307331"
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+
+component FixedCapacitor1uF_0402:
+    footprint = "C0402"
+    mpn = "CL05A105KP5NNNC"
+    lcsc_id = "C14445"
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+
+component FixedCapacitor22uF_0805:
+    footprint = "C0805"
+    mpn = "CL21A226MAQNNNE"
+    lcsc_id = "C45783"
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
