@@ -7,8 +7,21 @@ that has been confirmed, by a real `ato build`, to compile correctly with
 zero live network calls and zero atopile account. Resistor and capacitor
 values were reused from a real prior board's own actual BOM output (they
 were genuinely picked by real atopile part-search before that search
-infrastructure went dead/account-gated); the diode's LCSC id was
-independently confirmed via a real web search against lcsc.com.
+infrastructure went dead/account-gated).
+
+The diode used for reverse_polarity_protection (SS34_C8678) is NOT one
+of our own own_parts -- it's a real part already vendored in
+ato_lib/generics/elec/src, whose footprint is independently confirmed
+real because its actual .kicad_mod file exists in
+ato_lib/generics/elec/footprints/ and a real `ato build` resolved it
+correctly. This replaced an earlier hand-authored small-signal diode
+(own_parts/diodes.ato, since removed) whose footprint string was a
+real package name but not confirmed against an actual footprint file
+the way every other part here is -- resolved by switching to an
+already-footprint-verified real part instead of trying to hand-verify
+a new one, and a Schottky is also the more correct real-world choice
+for power-rail protection than a small-signal diode (lower forward-
+voltage drop, real amp-scale current handling).
 
 Honest limits, not glossed over:
   - Coverage is tiny (4 resistor values, 3 capacitor values, 1 button,
@@ -17,11 +30,6 @@ Honest limits, not glossed over:
   - A real v1 needs this sourced properly (LCSC's own API, Octopart, or
     similar) with live stock/price checks -- this static list has no way
     to know if a part goes out of stock or gets discontinued.
-  - The diode's footprint string ("SOD-123") is a real, standard package
-    name but was not independently checked against this ecosystem's own
-    KiCad footprint-library naming convention the way the other parts'
-    footprint strings were (those were confirmed by matching a real prior
-    build's actual output).
 """
 
 from dataclasses import dataclass
@@ -64,7 +72,9 @@ LED_KT_0603R_VF = 2.0  # volts
 LED_KT_0603R_IMAX = 0.020  # amps (20mA)
 
 BUTTON_SKRPACE010_ATO_NAME = "TactileButtonSKRPACE010"  # ato_lib/own_parts/buttons.ato
-DIODE_1N4148_ATO_NAME = "SmallSignalDiode1N4148"  # ato_lib/own_parts/diodes.ato
+DIODE_SS34_ATO_NAME = "SS34_C8678"  # ato_lib/generics/elec/src/SS34_C8678.ato -- a real,
+# already-vendored, footprint-verified Schottky diode (see this file's
+# own module docstring for why this replaced a hand-authored diode).
 
 
 def best_resistor_for_led_current(

@@ -64,7 +64,10 @@ def test_reverse_polarity_protection_builds():
     source = codegen.reverse_polarity_protection(v_supply=5.0)
     result = build_circuit(source)
     assert result.success, result.stdout + result.stderr
-    assert "1N4148SOD-123" in result.bom_csv
+    # SS34_C8678's real, footprint-verified package -- confirms the real
+    # .kicad_mod file actually resolved, not just a plausible-looking
+    # string (see parts_db.py's docstring for why this matters).
+    assert "SMA_L4.3-W2.6-LS5.2-RD" in result.bom_csv
     assert "CL05B104KB54PNC" in result.bom_csv
 
 

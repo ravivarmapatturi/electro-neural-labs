@@ -14,7 +14,7 @@ during verification, not a style choice).
 
 from parts_db import (
     BUTTON_SKRPACE010_ATO_NAME,
-    DIODE_1N4148_ATO_NAME,
+    DIODE_SS34_ATO_NAME,
     best_divider_pair,
     best_resistor_for_led_current,
 )
@@ -99,21 +99,32 @@ module Circuit:
 
 
 def reverse_polarity_protection(v_supply: float) -> str:
-    """Series reverse-polarity protection using a small-signal diode,
-    plus a decoupling capacitor on the protected side."""
+    """Series reverse-polarity protection using a Schottky diode, plus a
+    decoupling capacitor on the protected side. Uses SS34_C8678 -- a real
+    part already vendored in ato_lib/generics/elec/src, with a real,
+    independently-confirmed footprint (its .kicad_mod file genuinely
+    exists in ato_lib/generics/elec/footprints/) -- not a hand-authored
+    component with a plausible-but-unverified footprint string. A
+    Schottky is also the more correct real-world choice here than a
+    small-signal diode: lower forward-voltage drop and real amp-scale
+    current handling, appropriate for a power rail rather than a signal
+    line."""
     return f'''# Generated: series reverse-polarity protection on a {v_supply}V input,
 # plus a decoupling capacitor on the protected side. Current only flows
 # anode -> cathode in the correct-polarity direction, so a reversed input
 # can't forward-bias the diode and no current reaches the protected rail.
+# Schottky (SS34) chosen over a small-signal diode: lower forward-voltage
+# drop and real amp-scale current handling, the right choice for a power
+# rail rather than a signal line.
 
 from "ato_lib/generics/interfaces.ato" import Power
-from "ato_lib/own_parts/diodes.ato" import {DIODE_1N4148_ATO_NAME}
+from "ato_lib/generics/elec/src/{DIODE_SS34_ATO_NAME}.ato" import {DIODE_SS34_ATO_NAME}
 from "ato_lib/own_parts/capacitors.ato" import FixedCapacitor100nF_0402
 
 module Circuit:
     power_in = new Power
     power_protected = new Power
-    protect = new {DIODE_1N4148_ATO_NAME}
+    protect = new {DIODE_SS34_ATO_NAME}
     decouple = new FixedCapacitor100nF_0402
 
     power_in.vcc ~ protect.A
