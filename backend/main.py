@@ -50,18 +50,24 @@ def generate(req: GenerateRequest) -> GenerateResponse:
     covers what parts_db.py's tiny, honestly-sourced seed database
     actually has real parts for -- see parts_db.py's own docstring for
     exactly what that does and doesn't include."""
-    if req.pattern == "led_indicator":
-        source = codegen.led_indicator(req.v_supply)
-    elif req.pattern == "voltage_divider":
-        if req.v_out_target is None:
-            raise HTTPException(422, "voltage_divider requires v_out_target")
-        source = codegen.voltage_divider(req.v_supply, req.v_out_target)
-    elif req.pattern == "pullup_button":
-        source = codegen.pullup_button(req.v_supply)
-    elif req.pattern == "reverse_polarity_protection":
-        source = codegen.reverse_polarity_protection(req.v_supply)
-    else:
-        raise HTTPException(422, f"Unknown pattern: {req.pattern}")
+    try:
+        if req.pattern == "led_indicator":
+            source = codegen.led_indicator(req.v_supply)
+        elif req.pattern == "voltage_divider":
+            if req.v_out_target is None:
+                raise HTTPException(422, "voltage_divider requires v_out_target")
+            source = codegen.voltage_divider(req.v_supply, req.v_out_target)
+        elif req.pattern == "pullup_button":
+            source = codegen.pullup_button(req.v_supply)
+        elif req.pattern == "reverse_polarity_protection":
+            source = codegen.reverse_polarity_protection(req.v_supply)
+        else:
+            raise HTTPException(422, f"Unknown pattern: {req.pattern}")
+    except ValueError as e:
+        # E.g. no seed part in parts_db.py can satisfy the request (no
+        # resistor keeps LED current safe at this voltage) -- a real,
+        # anticipatable rejection, not a server error.
+        raise HTTPException(422, str(e)) from e
 
     try:
         result = build_circuit(source)

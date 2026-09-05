@@ -1,5 +1,6 @@
 -r requirements.txt
 pytest==8.3.3
+httpx==0.27.2
 
 # The real generation/build tests (tests/test_generation.py) also need
 # the actual `ato` CLI installed and on PATH -- NOT installable via this
